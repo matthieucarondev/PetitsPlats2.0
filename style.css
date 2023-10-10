@@ -59,6 +59,72 @@ background-size: cover;
   width: 4vw;
   padding: 1%;
 }
+#containerFilter {
+  display: flex;
+  gap: 10px;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-bottom: 2%;
+  flex-direction: row;
+  width: auto;
+}
+.btnFilter{
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius:10px;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  cursor: pointer;
+  font-weight: 500;
+  margin-right: 5%;
+  height: 50px;
+  overflow: hidden;
+}
+.btnFilter.open{
+  height: auto;
+}
+.btnFilter.open i {
+  position: relative;
+  transform: rotate(180deg);
+  bottom: 10px;
+}
+.btnFilter i {
+  transition: transform 0.3s ease-in-out;
+}
+.titleFilter{
+  display: flex;
+  padding: 5px 10px;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  justify-content: space-between;
+}
+.titleFilter h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.searchFilter {
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.searchFilter input[type="text"] {
+  width: 100%;
+  padding-right: 25px;
+}
+.searchIconGrey {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
 /* Styles pour les tablettes */
 @media screen and (min-width: 768px) and (max-width: 992px) {
 }

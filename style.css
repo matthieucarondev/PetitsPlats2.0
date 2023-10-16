@@ -6,12 +6,12 @@ body {
   margin: auto;
 }
 header {
-position: relative;
-width: 100%;
-height: 667px;
-background-position: center;
-background-image: url("./image/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png");
-background-size: cover;
+  position: relative;
+  width: 100%;
+  height: 667px;
+  background-position: center;
+  background-image: url("./image/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png");
+  background-size: cover;
 }
 
 #logo {
@@ -22,7 +22,7 @@ background-size: cover;
   width: 25%;
 }
 
-.title{
+.title {
   height: auto;
   font-family: "Impact";
   font-style: normal;
@@ -31,7 +31,7 @@ background-size: cover;
   color: #ffd15b;
   width: 80%;
   font-size: 44px;
-  line-height: 6vw;
+  line-height: 4vw;
   padding-left: 20%;
   padding-top: 15%;
 }
@@ -41,15 +41,15 @@ background-size: cover;
   font-size: 2vw;
   padding-left: 20%;
 }
-.searchInput{
-  width: 800px;
+.searchInput {
+  width: 226%;
   padding-right: 25px;
   padding-top: 2%;
   padding-bottom: 2%;
   padding-left: 2%;
   border-radius: 11px;
 }
-.searchIcon{
+.searchIcon {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -68,12 +68,12 @@ background-size: cover;
   flex-direction: row;
   width: auto;
 }
-.btnFilter{
+.btnFilter {
   background-color: white;
   color: black;
   border: none;
   padding: 5px 10px;
-  border-radius:10px;
+  border-radius: 10px;
   padding-top: 1%;
   padding-bottom: 1%;
   padding-left: 1%;
@@ -83,7 +83,7 @@ background-size: cover;
   height: 50px;
   overflow: hidden;
 }
-.btnFilter.open{
+.btnFilter.open {
   height: auto;
 }
 .btnFilter.open i {
@@ -94,7 +94,7 @@ background-size: cover;
 .btnFilter i {
   transition: transform 0.3s ease-in-out;
 }
-.titleFilter{
+.titleFilter {
   display: flex;
   padding: 5px 10px;
   padding-top: 1%;
@@ -125,6 +125,136 @@ background-size: cover;
   width: 20px;
   height: 20px;
 }
+#containerRecipes {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 2%;
+  padding-right: 2%;
+  justify-content: space-evenly;
+}
+.tag{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 5%;
+  padding-bottom: 2%;
+  padding-right: 5%;
+}
+.selectedTag{
+  position: relative;
+  background: #FFD15B;
+  border-radius: 10px;
+  padding: 1%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+.recipeCard {
+}
+.card {
+  margin-bottom: 5%;
+  width: 380px;
+  height: 731px;
+  border-radius: 21px;
+}
+.card img {
+  background-color: #ff5b5b;
+  width: 100%;
+  height: 253px;
+  border-radius: 21px 21px 0 0;
+  object-fit: cover;
+}
+.timer{
+  position: absolute;
+  background-color: #ffd15b;
+  border-radius: 50px;
+  padding: 3%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  right: 20px;
+  top:10px;
+}
+h3{
+  
+font-family: Anton;
+font-size: 25px;
+font-weight: 900;
+letter-spacing: 0em;
+text-align: left;
+margin:  8% 10%;
+}
+.recette {
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+  min-height: 125px;
+  margin-bottom: 2%;
+}
+ h4 , h5 {
+  font-family: Manrope;
+font-size: 12px;
+font-weight: 700;
+line-height: 16px;
+letter-spacing: 0.09em;
+text-align: left;
+color: #7A7A7A;
+
+
+}
+.recetteDescription {
+ 
+  width: 100%;
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 1%;
+  
+}
+.listIngredients{
+  width: 80%;
+  min-width: 269px;
+  height: 55%;
+  min-height: 329px;
+  margin: 0 auto;
+}
+
+.ingredient{
+  display: flex;
+  flex-direction: row;
+    flex-wrap: wrap;
+}
+.ingredient div{
+  width: 45%;
+}
+.ingredientNom{
+font-family: Manrope;
+font-size: 14px;
+font-weight: 500;
+letter-spacing: 0em;
+text-align: left;
+margin: 0;
+}
+.unite{
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #7A7A7A;
+  
+}
+.totalRecettes{
+  padding-top: 1%;
+  padding-left: 3%;
+  font-family: "Impact";
+  font-weight: 400 ;
+  font-size: 21px;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
 /* Styles pour les tablettes */
 @media screen and (min-width: 768px) and (max-width: 992px) {
 }

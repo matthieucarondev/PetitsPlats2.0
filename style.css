@@ -148,8 +148,6 @@ header {
   margin-right: 2%;
   margin-bottom: 2%;
 }
-.recipeCard {
-}
 .card {
   margin-bottom: 5%;
   width: 380px;
@@ -175,18 +173,16 @@ header {
 }
 h3{
   
-font-family: Anton;
+font-family:Anton;
 font-size: 25px;
 font-weight: 900;
 letter-spacing: 0em;
 text-align: left;
-margin:  8% 10%;
+margin:  8% 0%;
 }
 .recette {
   width: 80%;
   margin: 0 auto;
-  overflow: hidden;
-  min-height: 125px;
   margin-bottom: 2%;
 }
  h4 , h5 {
@@ -201,7 +197,7 @@ color: #7A7A7A;
 
 }
 .recetteDescription {
- 
+  height: 97px;
   width: 100%;
   font-family: Manrope;
   font-size: 14px;
@@ -209,21 +205,22 @@ color: #7A7A7A;
   line-height: 19px;
   letter-spacing: 0em;
   text-align: left;
-  padding: 1%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2%;
   
 }
-.listIngredients{
-  width: 80%;
+.ingredient{
+
+  width: 100%;
   min-width: 269px;
   height: 55%;
-  min-height: 329px;
+  min-height: 162px;
   margin: 0 auto;
-}
-
-.ingredient{
   display: flex;
   flex-direction: row;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .ingredient div{
   width: 45%;

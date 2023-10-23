@@ -50,14 +50,22 @@ header {
   border-radius: 11px;
 }
 .searchIcon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
+  position:absolute;
+  top: 2%;
+  transform: translate(55vw,0vh);
   background-color: black;
   border-radius: 5px 5px 5px 5px;
-  width: 4vw;
+  width: 4.3vw;
   padding: 1%;
+}
+#messageContainer{
+  color: white;
+  font-family: "Manrope";
+  font-weight: 900;
+  font-size: 20px;
+  padding-left: 20%;
+  padding-top: 2%;
+  
 }
 #containerFilter {
   display: flex;

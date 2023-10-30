@@ -2,51 +2,63 @@
 const searchInput = document.querySelector('input[type="text"]');
 const searchButton = document.querySelector('.searchIcon');
 
-//searchInput.addEventListener("input", searchRecipe);
+
 searchButton.addEventListener("click", searchRecipe);
-document.addEventListener("keyup", (e) => {
-    if(e.key=== "Enter"){
+searchInput.addEventListener("keyup", (e) => {
+  const searchTerm = searchInput.value
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+  if (
+    (searchTerm !== "" && searchTerm.length >= 3) ||
+    (e.key === "Enter" && searchTerm !== "" && searchTerm.length >= 3)
+  ) {
     searchRecipe();
-      
-    }});
+  }
+});
 
 // Fonction pour effectuer une recherche de recettes
 function searchRecipe() {
- 
-  const searchTerm = document.querySelector('input[type="text"]').value.trim().replace(/\s+/g, ' ').toLowerCase();
-  const hasSearchTerm = searchTerm !== '' && searchTerm.length >=3;
-  const isSearchTermValid = validateEntry(searchTerm);
+  const searchTerm = searchInput.value
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+  
 
-  if (!hasSearchTerm &&  isSearchTermValid) {
-    resetRecipeDisplay();
-    return;
-  }
-
-  let filteredRecipes = recipes.filter(recipe => {
+  let filteredRecipes = recipes.filter((recipe) => {
     const recipeTitle = recipe.name.toLowerCase();
     const recipeIngredients = getRecipeIngredients(recipe);
     const recipeDescription = recipe.description.toLowerCase();
-    return recipeTitle.includes(searchTerm) || recipeIngredients.includes(searchTerm) || recipeDescription.includes(searchTerm);
+    return (
+      recipeTitle.includes(searchTerm) ||
+      recipeIngredients.includes(searchTerm) ||
+      recipeDescription.includes(searchTerm)
+    );
   });
-    if (filteredRecipes.length === 0) {
-    const messageContainer = document.getElementById('messageContainer');
-    messageContainer.textContent = `Aucune recette ne contient '${searchTerm}'avec les éléments selctionnés. Vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
-    resetRecipeDisplay();
-    
-  } else {
-    updateRecipeDisplay(filteredRecipes);
-    const messageContainer = document.getElementById('messageContainer');
-    messageContainer.textContent = '';
-   
+  // Filtrer par ingrédients
+  const selectedRecipeIngredients = selectedIngredients.map(ingredient => ingredient.toLowerCase());
+
+  if (selectedRecipeIngredients.length > 0) {
+    filteredRecipes = filteredRecipes.filter(recipe => {
+      const recipeIngredients = getRecipeIngredients(recipe);
+      return selectedRecipeIngredients.every(ingredient => recipeIngredients.includes(ingredient));
+    });
   }
- 
-  
-}
-// Fonction pour réinitialiser l'affichage des recettes
-function resetRecipeDisplay() {
-  recipesContainer.innerHTML = "";
-  createRecipeCards(recipes); // Utilisation de la fonction createRecipeCards pour générer les cartes de recette
-  totalRecipeCount.textContent = `${recipes.length} recettes`;
+  if (filteredRecipes.length === 0) {
+    const recipesContainer = document.getElementById("containerRecipes");
+    recipesContainer.textContent = `Aucune recette ne contient '${searchTerm}'avec les éléments selctionnés. Vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
+ filterContainer.classList.add("hide");
+ recipesContainer.classList.add("messageContainer")
+ resetFilterLists();
+
+  } else {
+    const recipesContainer = document.getElementById("containerRecipes");
+    recipesContainer.textContent =
+    updateFilterLists(filteredRecipes);
+    updateRecipeDisplay(filteredRecipes);
+    filterContainer.classList.remove("hide");
+    recipesContainer.classList.remove("messageContainer");
+  }
 }
 // Fonction pour la mise a jour de  l'affichage des recettes filtrées
 function updateRecipeDisplay(filteredRecipes) {
@@ -54,16 +66,54 @@ function updateRecipeDisplay(filteredRecipes) {
   createRecipeCards(filteredRecipes);
   totalRecipeCount.textContent = `${filteredRecipes.length} recettes`;
 }
+
+// Fonction pour réinitialiser les listes de filtres
+function resetFilterLists() {
+    // Tableau des listes de filtres à réinitialiser
+    const filterLists = [
+      { list: ingredientsList, items: allIngredients },
+    //  { list: appliancesList, items: allAppliances },
+     // { list: ustensilsList, items: allUstensils },
+    ];
+    //reinitialisation
+    filterLists.forEach((filter) => {
+      filter.list.innerHTML = "";
+      filter.items.forEach((item) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        filter.list.appendChild(listItem);
+      });
+    });
+  }
+  //Fonction pour l'affichage des listes de filtres en fonction des recettes filtrées
+  function updateFilterLists(filteredRecipes) {
+    const filteredIngredients = new Set();
+    const filteredAppliances = new Set();
+    const filteredUstensils = new Set();
+  
+     // Parcours de chaque recette filtrée
+    filteredRecipes.forEach((recipe) => {
+      recipe.ingredients.forEach((ingredient) => {
+        filteredIngredients.add(ingredient.ingredient);
+      });
+      filteredAppliances.add(recipe.appliance);
+      recipe.ustensils.forEach((ustensil) => {
+        filteredUstensils.add(ustensil);
+      });
+    });
+  
+    // Mettre à jour la liste des ingrédients sélectionnés
+    selectedIngredients.forEach((ingredient) => {
+      // Vérification si l'ingrédient sélectionné n'est pas présent
+      if (!filteredIngredients.has(ingredient)) {
+        selectedIngredients.splice(selectedIngredients.indexOf(ingredient), 1);
+      }
+    });
+    generateFilteredIngredientsList([...filteredIngredients]);}
+
 //Fonction pour récuperer les ingredients des recettes
 function getRecipeIngredients(recipe) {
-return recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
-}
-//Fonction pour verifier les caractères non autorisés
-function validateEntry(str) {
-  var regex =
-    /[^a-zA-Z'áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ ]+/;
-  if (str.match(regex)) {
-    return false;
-  }
-  return true;
+  return recipe.ingredients.map((ingredient) =>
+    ingredient.ingredient.toLowerCase()
+  );
 }

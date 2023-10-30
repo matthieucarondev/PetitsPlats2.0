@@ -27,14 +27,12 @@ function createRecipeCard(recipe) {
                       <p class="recetteDescription">${recipe.description}</p>
                       <h5 class="listIngredients">INGRÉDIENTS</h5>
                       <dl class="ingredient">
-                      ${ recipe.ingredients.map(ingredient=> {
+                      ${recipe.ingredients.map(ingredient=> {
                         return `
                         <div>
                         <dd class="ingredientNom">${ingredient.ingredient}</dd>
-                        <dy class="unite">${ingredient.quantity||`` } ${ingredient.unit ||``}</dt>
-                        </div>
-                        `;})}
-                      </dl>
+                        <dt class="unite">${ingredient.quantity||`` } ${ingredient.unit ||``}</dt>
+                        </div>`}).join("")}</dl>
               </figcaption>
             </figure>
           </article>

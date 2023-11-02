@@ -166,6 +166,10 @@ height: 500px;
 }
 .closeIcon{
   padding: 5px;
+  stroke-width: 2.167px;
+  stroke: var(--Black, #1B1B1B);
+  width: 10px;
+  height: 10px;
 }
 .card {
   margin-bottom: 5%;
@@ -290,7 +294,7 @@ li {
 li:hover {
   background-color: #FFD15B;
 }
-.selectedIngredientTag{
+.selecteFilterTag{
   background-color: #FFD15B;
 }
 /* Styles pour les tablettes */

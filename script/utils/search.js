@@ -44,6 +44,15 @@ function searchRecipe() {
       return selectedRecipeIngredients.every(ingredient => recipeIngredients.includes(ingredient));
     });
   }
+  // Filtrer par appareils
+  const selectedRecipeAppliances = selectedAppliances.map(appliance => appliance.toLowerCase());
+
+  if (selectedRecipeAppliances.length > 0) {
+    filteredRecipes = filteredRecipes.filter(recipe => {
+      const recipeAppliance = recipe.appliance.toLowerCase();
+      return selectedRecipeAppliances.every(appliance => recipeAppliance === appliance);
+    });
+  }
   if (filteredRecipes.length === 0) {
     const recipesContainer = document.getElementById("containerRecipes");
     recipesContainer.textContent = `Aucune recette ne contient '${searchTerm}'avec les éléments selctionnés. Vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
@@ -72,8 +81,8 @@ function resetFilterLists() {
     // Tableau des listes de filtres à réinitialiser
     const filterLists = [
       { list: ingredientsList, items: allIngredients },
-    //  { list: appliancesList, items: allAppliances },
-     // { list: ustensilsList, items: allUstensils },
+      { list: appliancesList, items: allAppliances },
+
     ];
     //reinitialisation
     filterLists.forEach((filter) => {
@@ -89,7 +98,7 @@ function resetFilterLists() {
   function updateFilterLists(filteredRecipes) {
     const filteredIngredients = new Set();
     const filteredAppliances = new Set();
-    const filteredUstensils = new Set();
+ 
   
      // Parcours de chaque recette filtrée
     filteredRecipes.forEach((recipe) => {
@@ -97,9 +106,6 @@ function resetFilterLists() {
         filteredIngredients.add(ingredient.ingredient);
       });
       filteredAppliances.add(recipe.appliance);
-      recipe.ustensils.forEach((ustensil) => {
-        filteredUstensils.add(ustensil);
-      });
     });
   
     // Mettre à jour la liste des ingrédients sélectionnés
@@ -109,7 +115,16 @@ function resetFilterLists() {
         selectedIngredients.splice(selectedIngredients.indexOf(ingredient), 1);
       }
     });
-    generateFilteredIngredientsList([...filteredIngredients]);}
+    generateFilteredIngredientsList([...filteredIngredients]);
+    
+    // Mettre à jour la liste des appareils sélectionnés
+  selectedAppliances.forEach((appliance) => {
+    if (!filteredAppliances.has(appliance)) {
+      selectedAppliances.splice(selectedAppliances.indexOf(appliance), 1);
+    }
+  });
+  generateFilteredAppliancesList([...filteredAppliances]);}
+
 
 //Fonction pour récuperer les ingredients des recettes
 function getRecipeIngredients(recipe) {

@@ -30,10 +30,10 @@ const ingredientsFilter = document.getElementById(
     ingredientsFilter.forEach((ingredient) => {
       const ingredientItem = document.createElement("li");
       ingredientItem.textContent = ingredient;
-      addClickEventListenerIngredients(ingredientItem, ingredient, "selectedIngredientTag");
+      addClickEventListenerIngredients(ingredientItem, ingredient, "selecteFilterTag");
       // Vérifier si l'ingrédient est déjà sélectionné
       if (selectedIngredients.includes(ingredient)) {
-        ingredientItem.classList.add("selectedIngredientTag");
+        ingredientItem.classList.add("selecteFilterTag");
       }
       ingredientsList.appendChild(ingredientItem);
     });
@@ -63,7 +63,7 @@ const ingredientsFilter = document.getElementById(
    filterIngredients.forEach((ingredient) => {
      const ingredientItem = document.createElement("li");
      ingredientItem.textContent = ingredient;
-     addClickEventListenerIngredients(ingredientItem, ingredient, "selectedIngredientTag");
+     addClickEventListenerIngredients(ingredientItem, ingredient, "selecteFilterTag");
      ingredientsList.appendChild(ingredientItem);
    });
   }
@@ -71,27 +71,31 @@ const ingredientsFilter = document.getElementById(
   let selectedTagIngredient = null;
   //Fonction pour créer un tag d'ingrédient
   function createIngredientTag(ingredient) {
-    const ingredientTag = document.createElement('div');
-    ingredientTag.textContent = ingredient;
-    ingredientTag.classList.add('selectedTag');
-  
-    const closeIcon = document.createElement('span');
-    closeIcon.innerHTML = '&times;';
-    closeIcon.classList.add('closeIcon');
-  
-    closeIcon.addEventListener('click', () => {
-      ingredientTag.remove();
-      // Retirer l'élément de la liste des éléments sélectionnés
-      const index = selectedIngredients.indexOf(ingredient);
-      if (index > -1) {
-        selectedIngredients.splice(index, 1);
-      }
-      searchRecipe();
-    });
-  
-    ingredientTag.appendChild(closeIcon);
+    const ingredientTag= ` <button class="selectedTag" id="${ingredient}">
+                               <span class="tagName" >${ingredient}</span>
+                                <span class="closeIcon">
+                                &times;
+                              </span>
+                            </button>`;
+ 
+                            
     const tag = document.querySelector('.tag');
-    tag.appendChild(ingredientTag);
+    const range = document.createRange();
+    range.selectNodeContents(tag);
+    const cardIngredientTag = range.createContextualFragment(ingredientTag);
+    tag.appendChild(cardIngredientTag);
+    const closeIcon = document.getElementById(`${ingredient}`);
+  closeIcon.addEventListener('click', () => {
+                          
+    closeIcon.remove();
+                              // Retirer l'élément de la liste des éléments sélectionnés
+                              const index = selectedIngredients.indexOf(ingredient);
+                              if (index > -1) {
+                                selectedIngredients.splice(index, 1);
+                              }
+                              searchRecipe();
+                            });
+ 
   }
   // Ajouter un écouteur d'événements click à chaque ingredients de la liste
   function addClickEventListenerIngredients(ingredientItem, ingredient) {
@@ -105,3 +109,112 @@ const ingredientsFilter = document.getElementById(
       }
     });
   }
+  // Récupérer la référence de l'élément de filtre des ingrédients
+const appliancesFilter = document.getElementById(
+  "filterAppareils"
+);
+// Récupérer la liste de tous les appareils du fichier JSON
+const allAppliances = recipes.reduce((appliances, recipe) => {
+  if (!appliances.includes(recipe.appliance)) {
+    appliances.push(recipe.appliance);
+  }
+  return appliances;
+}, []);
+
+// Générer les éléments HTML pour la liste des appareils
+const appliancesList = document.createElement("div"); 
+appliancesList.classList.add("filterlist");
+let selectedAppliances = []; // Tableau pour stocker les éléments déjà sélectionnés
+
+// Générer les éléments HTML pour la liste des ingrédients initiale
+generateFilteredAppliancesList(allAppliances);
+// Ajouter la liste des appareils au filtre des appareils
+appliancesFilter.appendChild(appliancesList);
+
+// Générer les éléments HTML pour la liste des appareils filtrés
+function generateFilteredAppliancesList(appliances) {
+  appliancesList.innerHTML = "";
+  appliances.forEach((appliance) => {
+    const applianceItem = document.createElement("li");
+    applianceItem.textContent = appliance;
+    addClickEventListenerAppliances(applianceItem, appliance);
+    if (selectedAppliances.includes(appliance)) {
+      applianceItem.classList.add("selecteFilterTag");
+    }
+    appliancesList.appendChild(applianceItem); 
+  });
+}
+
+// Ajout d'un écouteur d'événement sur la liste d'ingredients
+appliancesFilter.addEventListener("click", searchAppliances);
+// Ajout d'un écouteur d'événement sur ingredients
+appliancesFilter.addEventListener("input", searchAppliances);
+
+// Fonction pour effectuer une recherche d'appareils
+function searchAppliances() {
+  // Récupération du terme de recherche et nettoyage
+  const searchAppliances = document
+    .querySelector("#filterAppareils .searchFilter input")
+    .value.trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+
+  // Filtrer les appareils en fonction du texte de recherche
+  const filterAppliances = allAppliances.filter((appliance) =>
+    appliance.toLowerCase().includes(searchAppliances)
+  );
+
+  // Supprimer les anciens éléments de la liste des appareils
+  appliancesList.innerHTML = "";
+
+  // Générer les nouveaux éléments HTML pour la liste des appareils filtrés
+  filterAppliances.forEach((appliance) => {
+    const applianceItem = document.createElement("li");
+    applianceItem.textContent = appliance;
+    addClickEventListenerAppliances(applianceItem, appliance, "selecteFilterTag");
+    appliancesList.appendChild(applianceItem);
+  });
+}
+
+let selectedTagAppliance = null;
+  //Fonction pour créer un tag d'ingrédient
+  function createApplianceTag(appliance) {
+    const applianceTag= ` <button class="selectedTag" id="${appliance}">
+                               <span class="tagName" >${appliance}</span>
+                                <span class="closeIcon">
+                                &times;
+                              </span>
+                            </button>`;
+ 
+                            
+    const tag = document.querySelector('.tag');
+    const range = document.createRange();
+    range.selectNodeContents(tag);
+    const cardApplianceTag = range.createContextualFragment(applianceTag);
+    tag.appendChild(cardApplianceTag );
+    const closeIcon = document.getElementById(`${appliance}`);
+  closeIcon.addEventListener('click', () => {
+                          
+    closeIcon.remove();
+                              // Retirer l'élément de la liste des éléments sélectionnés
+                              const index = selectedAppliances.indexOf(appliance);
+                              if (index > -1) {
+                                selectedAppliances.splice(index, 1);
+                              }
+                              searchRecipe();
+                            });
+ 
+  }
+
+// Ajouter un écouteur d'événements click à chaque apareils de la liste
+function addClickEventListenerAppliances(applianceItem, appliance) {
+  applianceItem.addEventListener('click', (event) => {
+   event.stopPropagation();
+    if (!selectedAppliances.includes(appliance)) {
+      createApplianceTag(appliance);
+      selectedAppliances.push(appliance);
+      selectedTagAppliance = appliance.toLowerCase();
+      searchRecipe();
+    }
+  });
+}

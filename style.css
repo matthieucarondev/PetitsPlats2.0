@@ -104,11 +104,12 @@ height: 500px;
 }
 .btnFilter i {
   transition: transform 0.3s ease-in-out;
+  padding-bottom: 3%;
 }
 .titleFilter {
   display: flex;
   padding: 5px 10px;
-  padding-top: 1%;
+  padding-top: 3%;
   padding-bottom: 1%;
   padding-left: 1%;
   justify-content: space-between;
@@ -308,5 +309,20 @@ li:hover {
 @media screen and (max-width: 767px) {
   .title{
     line-height: 11vw;
+    font-size: 30px;
+  }
+  #containerFilter {
+    flex-direction: column;
+    margin-top: 10%;
+  }
+  #searchContainer {
+    font-size: 4vw;
+    padding-right: 6%;
+    padding-left: 6%;
+
+  }
+  header {
+     height: 401px;
+    background-position: right;
   }
 }

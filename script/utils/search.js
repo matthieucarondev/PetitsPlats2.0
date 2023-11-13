@@ -53,6 +53,15 @@ function searchRecipe() {
       return selectedRecipeAppliances.every(appliance => recipeAppliance === appliance);
     });
   }
+   // Filtrer par ustensils
+   const selectedRecipeUstensils = selectedUstensils.map(ustensil=>ustensil.toLowerCase());
+
+   if (selectedRecipeUstensils.length > 0) {
+     filteredRecipes = filteredRecipes.filter(recipe => {
+       const recipeUstensil = recipe.ustensils.map(ustensil=>ustensil.toLowerCase());
+       return selectedRecipeUstensils.every(ustensil => recipeUstensil.includes(ustensil));
+     });
+   }
   if (filteredRecipes.length === 0) {
     const recipesContainer = document.getElementById("containerRecipes");
     recipesContainer.textContent = `Aucune recette ne contient '${searchTerm}'avec les éléments selctionnés. Vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
@@ -82,6 +91,7 @@ function resetFilterLists() {
     const filterLists = [
       { list: ingredientsList, items: allIngredients },
       { list: appliancesList, items: allAppliances },
+      { list: ustensilsList, items: allUstensils },
 
     ];
     //reinitialisation
@@ -98,7 +108,7 @@ function resetFilterLists() {
   function updateFilterLists(filteredRecipes) {
     const filteredIngredients = new Set();
     const filteredAppliances = new Set();
- 
+    const filteredUstensils = new Set();
   
      // Parcours de chaque recette filtrée
     filteredRecipes.forEach((recipe) => {
@@ -106,6 +116,9 @@ function resetFilterLists() {
         filteredIngredients.add(ingredient.ingredient);
       });
       filteredAppliances.add(recipe.appliance);
+      recipe.ustensils.forEach((ustensil)=>{
+        filteredUstensils.add(ustensil);
+      });
     });
   
     // Mettre à jour la liste des ingrédients sélectionnés
@@ -123,7 +136,16 @@ function resetFilterLists() {
       selectedAppliances.splice(selectedAppliances.indexOf(appliance), 1);
     }
   });
-  generateFilteredAppliancesList([...filteredAppliances]);}
+  generateFilteredAppliancesList([...filteredAppliances]);
+
+// Mettre à jour la liste des ustensils sélectionnés
+selectedUstensils.forEach((ustensil) => {
+  if (!filteredUstensils.has(ustensil)) {
+    selectedUstensils.splice(selectedUstensils.indexOf(ustensil), 1);
+  }
+});
+generateFilterUstensilsList([...filteredUstensils]);}
+
 
 
 //Fonction pour récuperer les ingredients des recettes

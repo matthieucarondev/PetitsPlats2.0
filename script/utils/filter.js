@@ -141,15 +141,6 @@ const allAppliances = recipes.reduce((appliances, recipe) => {
   return appliances;
 }, []);
 
-// Générer les éléments HTML pour la liste des appareils
-const appliancesList = document.createElement("div");
-appliancesList.classList.add("filterlist");
-let selectedAppliances = []; // Tableau pour stocker les éléments déjà sélectionnés
-
-// Générer les éléments HTML pour la liste des ingrédients initiale
-generateFilteredAppliancesList(allAppliances);
-// Ajouter la liste des appareils au filtre des appareils
-appliancesFilter.appendChild(appliancesList);
 
 // Générer les éléments HTML pour la liste des appareils filtrés
 function generateFilteredAppliancesList(appliances) {
@@ -165,10 +156,6 @@ function generateFilteredAppliancesList(appliances) {
   });
 }
 
-// Ajout d'un écouteur d'événement sur la liste d'ingredients
-appliancesFilter.addEventListener("click", searchAppliances);
-// Ajout d'un écouteur d'événement sur ingredients
-appliancesFilter.addEventListener("input", searchAppliances);
 
 // Fonction pour effectuer une recherche d'appareils
 function searchAppliances() {
@@ -239,3 +226,112 @@ function addClickEventListenerAppliances(applianceItem, appliance) {
     }
   });
 }
+// Générer les éléments HTML pour la liste des appareils
+const appliancesList = document.createElement("div");
+appliancesList.classList.add("filterlist");
+let selectedAppliances = []; // Tableau pour stocker les éléments déjà sélectionnés
+
+
+// Générer les éléments HTML pour la liste des ingrédients initiale
+generateFilteredAppliancesList(allAppliances);
+// Ajouter la liste des appareils au filtre des appareils
+appliancesFilter.appendChild(appliancesList);
+// Ajout d'un écouteur d'événement sur la liste d'ingredients
+appliancesFilter.addEventListener("click", searchAppliances);
+// Ajout d'un écouteur d'événement sur ingredients
+appliancesFilter.addEventListener("input", searchAppliances);
+
+////////////////////////////////////////////APPLIANCES////////////////////////////////////////
+// Récupérer la référence de l'élément de filtre des ustensils
+const ustensilFilter =  document.querySelector(
+  ".btnFilter:nth-child(3) .searchFilter"
+);
+// Récupérer la liste de tous les ustensils du fichier JSON
+const allUstensils = recipes.reduce((ustensils, recipe) => {
+  recipe.ustensils.forEach((ustensil) => {
+    if (!ustensils.includes(ustensil)) {
+      ustensils.push(ustensil);
+    }
+});
+return ustensils;
+}, []);
+// Générer les éléments HTML pour la liste des appareils
+const ustensilsList = document.createElement("div");
+ustensilsList.classList.add("filterlist");
+let selectedUstensils = []; // Tableau pour stocker les éléments déjà sélectionnés
+  
+// Générer les éléments HTML pour la liste des ustensils initiale
+generateFilterUstensilsList(allUstensils);
+// Ajouter la liste des ingrédients au filtre des ustensils
+ustensilFilter.appendChild(ustensilsList);
+
+//Générer les éléments HTML pour la liste des ustensils filtrés
+function generateFilterUstensilsList(ustensils) {
+  ustensilsList.innerHTML="";
+  ustensils.forEach((ustensil)=> {
+      const ustensilItem = document.createElement("li");
+      ustensilItem.textContent = ustensil;
+      addClickEventListenerUstensils(ustensilItem, ustensil);  
+      if (selectedUstensils.includes(ustensil)) {
+        ustensilItem.classList.add("selecteFilterTag");
+      }
+      ustensilsList.appendChild(ustensilItem);
+  });
+}
+// Ajout d'un écouteur d'événement sur la liste d'ustensils
+ustensilFilter.addEventListener("click", searchUstensil);
+// Ajout d'un écouteur d'événement sur ingredients
+ustensilFilter.addEventListener("input", searchUstensil);
+
+//fonction pour effectuer une recherche d'ustensil
+function searchUstensil() {
+  // recuperer le terme de la recher et netoyer
+  const searchUstensil = document .querySelector("#filterUstensiles .searchFilter input")
+  .value.trim().replace(/\s+/g,"").toLowerCase();
+  //filtrer les ustensils en fonction du texte recherher
+  const filterUstensils = allUstensils.filter((ustensil) =>
+  ustensil.toLowerCase().includes(searchUstensil));
+  generateFilterUstensilsList(filterUstensils);
+}
+let selectedTagUstensil = null;
+//Fonction pour créer un tag d'ustensil
+function createUstensilTag(ustensil) {
+  const ustensilTag = ` <button class="selectedTag" id="${ustensil}">
+                               <span class="tagName" >${ustensil}</span>
+                                <span class="closeIcon">
+                                &times;
+                              </span>
+                            </button>`;
+
+  const tag = document.querySelector(".tag");
+  const range = document.createRange();
+  range.selectNodeContents(tag);
+  const cardUstensilTag = range.createContextualFragment(ustensilTag);
+  tag.appendChild(cardUstensilTag);
+  const closeIcon = document.getElementById(`${ustensil}`);
+  closeIcon.addEventListener("click", () => {
+    closeIcon.remove();
+    // Retirer l'élément de la liste des éléments sélectionnés
+    const index = selectedUstensils.indexOf(appliance);
+    if (index > -1) {
+      selectedUstensils.splice(index, 1);
+    }
+    searchRecipe();
+  });
+}
+
+// Ajouter un écouteur d'événements click à chaque apareils de la liste
+function addClickEventListenerUstensils(ustensilItem, ustensil) {
+  ustensilItem.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (!selectedUstensils.includes(ustensil)) {
+      createUstensilTag(ustensil);
+      selectedUstensils.push(ustensil);
+      selectedTagUstensil= ustensil.toLowerCase();
+      searchRecipe();
+    }
+  });
+}
+
+/*
+*/

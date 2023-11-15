@@ -312,7 +312,7 @@ function createUstensilTag(ustensil) {
   closeIcon.addEventListener("click", () => {
     closeIcon.remove();
     // Retirer l'élément de la liste des éléments sélectionnés
-    const index = selectedUstensils.indexOf(appliance);
+    const index = selectedUstensils.indexOf(ustensil);
     if (index > -1) {
       selectedUstensils.splice(index, 1);
     }

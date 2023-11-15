@@ -25,16 +25,20 @@ function searchRecipe() {
     .toLowerCase();
   
 
-  let filteredRecipes = recipes.filter((recipe) => {
-    const recipeTitle = recipe.name.toLowerCase();
+  let filteredRecipes = [];
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+     const recipeTitle = recipe.name.toLowerCase();
     const recipeIngredients = getRecipeIngredients(recipe);
     const recipeDescription = recipe.description.toLowerCase();
-    return (
-      recipeTitle.includes(searchTerm) ||
+
+    if ( recipeTitle.includes(searchTerm) ||
       recipeIngredients.includes(searchTerm) ||
-      recipeDescription.includes(searchTerm)
-    );
-  });
+      recipeDescription.includes(searchTerm)) {
+      
+        filteredRecipes.push(recipe);
+    }
+  }
   // Filtrer par ingrédients
   const selectedRecipeIngredients = selectedIngredients.map(ingredient => ingredient.toLowerCase());
 

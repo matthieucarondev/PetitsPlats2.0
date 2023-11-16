@@ -41,7 +41,7 @@ function searchRecipe() {
   // Filtrer par ingrédients
   const selectedRecipeIngredients = [];
   for (let i = 0; i < selectedIngredients.length; i++) {
-    selectedIngredients.push(selectedIngredients[i].toLowerCase());
+    selectedRecipeIngredients.push(selectedIngredients[i].toLowerCase());
   }
 
   if (selectedRecipeIngredients.length > 0) {
@@ -65,7 +65,7 @@ function searchRecipe() {
   // Filtrer par appareils
   const selectedRecipeAppliances = [];
   for (let i = 0; i < selectedAppliances.length; i++) {
-    selectedAppliances.push(selectedAppliances[i].toLowerCase());
+    selectedRecipeAppliances.push(selectedAppliances[i].toLowerCase());
   }
   if (selectedRecipeAppliances.length > 0) {
     const recapFilteredRecipes = [];

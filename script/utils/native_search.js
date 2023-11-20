@@ -105,7 +105,7 @@ function searchRecipe() {
           break;
         }
       }
-      if (hasAppliance) {
+      if (hasAllUstensils) {
         recapFilteredRecipes.push(recipe);
       }
     }
@@ -215,10 +215,14 @@ function updateFilterLists(filteredRecipes) {
   }
   generateFilterUstensilsList([...filteredUstensils]);
 }
-
-//Fonction pour récuperer les ingredients des recettes
 function getRecipeIngredients(recipe) {
-  return recipe.ingredients.map((ingredient) =>
-    ingredient.ingredient.toLowerCase()
-  );
+  const ingredientsList = [];
+  const ingredients = recipe.ingredients;
+
+  for (let i = 0; i < ingredients.length; i++) {
+    ingredientsList.push(ingredients[i].ingredient.toLowerCase());
+  }
+
+  return ingredientsList;
 }
+ 

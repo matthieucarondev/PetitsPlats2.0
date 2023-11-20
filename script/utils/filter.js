@@ -333,5 +333,3 @@ function addClickEventListenerUstensils(ustensilItem, ustensil) {
   });
 }
 
-/*
-*/

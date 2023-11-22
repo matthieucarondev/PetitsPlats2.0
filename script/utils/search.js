@@ -29,12 +29,19 @@ function searchRecipe() {
     const recipeTitle = recipe.name.toLowerCase();
     const recipeIngredients = getRecipeIngredients(recipe);
     const recipeDescription = recipe.description.toLowerCase();
-    return (
-      recipeTitle.includes(searchTerm) ||
-      recipeIngredients.includes(searchTerm) ||
-      recipeDescription.includes(searchTerm)
-    );
-  });
+     // Vérifier d'abord la correspondance avec le titre
+    if (recipeTitle.includes(searchTerm.toLowerCase())) {
+        return true;
+    }
+
+    // Si aucune correspondance dans le titre, vérifier les ingrédients et la description
+    if (recipeIngredients.includes(searchTerm.toLowerCase())||recipeDescription.includes(searchTerm.toLowerCase())) {
+        return true;
+    }
+    // Si aucune correspondance n'a été trouvée, retourner false
+    return false;
+});
+
   // Filtrer par ingrédients
   const selectedRecipeIngredients = selectedIngredients.map(ingredient => ingredient.toLowerCase());
 

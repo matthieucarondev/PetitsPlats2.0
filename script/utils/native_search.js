@@ -23,6 +23,7 @@ function searchRecipe() {
     .replace(/\s+/g, " ")
     .toLowerCase();
 
+    
   let filteredRecipes = [];
   for (let i = 0; i < recipes.length; i++) {
     const recipe = recipes[i];
@@ -30,14 +31,19 @@ function searchRecipe() {
     const recipeIngredients = getRecipeIngredients(recipe);
     const recipeDescription = recipe.description.toLowerCase();
 
-    if (
-      recipeTitle.includes(searchTerm) ||
-      recipeIngredients.includes(searchTerm) ||
-      recipeDescription.includes(searchTerm)
-    ) {
+    if (recipeTitle.includes(searchTerm)) {
       filteredRecipes.push(recipe);
-    }
+  } else {
+      // Si aucune correspondance dans le title, vérifier les ingrédients et la description
+      if (
+          recipeIngredients.includes(searchTerm) ||
+          recipeDescription.includes(searchTerm)
+      ) {
+          filteredRecipes.push(recipe);
+      }
   }
+  }
+
   // Filtrer par ingrédients
   const selectedRecipeIngredients = [];
   for (let i = 0; i < selectedIngredients.length; i++) {

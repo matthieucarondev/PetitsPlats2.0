@@ -162,7 +162,7 @@ function getRecipeIngredients(recipe) {
   );
 }
 function matchIngredient(recipe,searchTerm) { 
-  const matchIngred =false ; 
+  let matchIngred =false ; 
   recipe.ingredients.forEach((ingredient) => {
     if (ingredient.ingredient.toLowerCase().includes(searchTerm)){
       matchIngred = true ;

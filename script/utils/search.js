@@ -27,7 +27,7 @@ function searchRecipe() {
 
   let filteredRecipes = recipes.filter((recipe) => {
     const recipeTitle = recipe.name.toLowerCase();
-    const recipeIngredients = getRecipeIngredients(recipe);
+    const recipeIngredients = matchIngredient(recipe,searchTerm);
     const recipeDescription = recipe.description.toLowerCase();
      // Vérifier d'abord la correspondance avec le titre
     if (recipeTitle.includes(searchTerm.toLowerCase())) {
@@ -35,7 +35,7 @@ function searchRecipe() {
     }
 
     // Si aucune correspondance dans le titre, vérifier les ingrédients et la description
-    if (matchIngredient(recipe, searchTerm) ||recipeDescription.includes(searchTerm.toLowerCase())) {
+    if ( recipeIngredients.includes(searchTerm.toLowerCase())||recipeDescription.includes(searchTerm.toLowerCase())) {
         return true;
     }
     // Si aucune correspondance n'a été trouvée, retourner false

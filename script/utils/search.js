@@ -35,7 +35,7 @@ function searchRecipe() {
     }
 
     // Si aucune correspondance dans le titre, vérifier les ingrédients et la description
-    if (recipeIngredients.includes(searchTerm.toLowerCase())||recipeDescription.includes(searchTerm.toLowerCase())) {
+    if (matchIngredient(recipe, searchTerm) ||recipeDescription.includes(searchTerm.toLowerCase())) {
         return true;
     }
     // Si aucune correspondance n'a été trouvée, retourner false
@@ -161,3 +161,13 @@ function getRecipeIngredients(recipe) {
     ingredient.ingredient.toLowerCase()
   );
 }
+function matchIngredient(recipe,searchTerm) { 
+  const matchIngred =false ; 
+  recipe.ingredients.forEach((ingredient) => {
+    if (ingredient.ingredient.toLowerCase().includes(searchTerm)){
+      matchIngred = true ;
+    }
+  });
+  return matchIngred;
+}
+  

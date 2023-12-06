@@ -28,20 +28,15 @@ function searchRecipe() {
   for (let i = 0; i < recipes.length; i++) {
     const recipe = recipes[i];
     const recipeTitle = recipe.name.toLowerCase();
-    const recipeIngredients = getRecipeIngredients(recipe);
     const recipeDescription = recipe.description.toLowerCase();
 
-    if (recipeTitle.includes(searchTerm)) {
+    if (
+      recipeTitle.includes(searchTerm) ||
+      matchIngredient(recipe, searchTerm) ||
+      recipeDescription.includes(searchTerm)
+    ) {
       filteredRecipes.push(recipe);
-  } else {
-      // Si aucune correspondance dans le title, vérifier les ingrédients et la description
-      if (
-          recipeIngredients.includes(searchTerm) ||
-          recipeDescription.includes(searchTerm)
-      ) {
-          filteredRecipes.push(recipe);
-      }
-  }
+    }
   }
 
   // Filtrer par ingrédients
@@ -93,8 +88,8 @@ function searchRecipe() {
   }
   // Filtrer par ustensils
   const selectedRecipeUstensils = [];
-  for (let i = 0; i < searchUstensil.length; i++) {
-    selectedRecipeUstensils.push(searchUstensil[i].toLowerCase());
+  for (let i = 0; i < selectedUstensils.length; i++) {
+    selectedRecipeUstensils.push(selectedUstensils[i].toLowerCase());
   }
   if (selectedRecipeUstensils.length > 0) {
     const recapFilteredRecipes = [];
@@ -136,7 +131,7 @@ function searchRecipe() {
 function updateRecipeDisplay(filteredRecipes) {
   recipesContainer.innerHTML = "";
   createRecipeCards(filteredRecipes);
-  totalRecipeCount.textContent = `${filteredRecipes.length} recettes`;
+  totalRecipeCount.textContent = `${ filteredRecipes.length > 1 ? filteredRecipes.length + " recettes" : filteredRecipes.length + " recette"  } `;
 }
 
 // Fonction pour réinitialiser les listes de filtres
@@ -231,4 +226,11 @@ function getRecipeIngredients(recipe) {
 
   return ingredientsList;
 }
- 
+function matchIngredient(recipe, searchterm) {
+  for (let i = 0; i < recipe.ingredients.length; i++) {
+    if (recipe.ingredients[i].ingredient.toLowerCase().includes(searchterm)) {
+      return true;
+    }
+  }
+  return false;
+}

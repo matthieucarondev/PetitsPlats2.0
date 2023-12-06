@@ -9,8 +9,9 @@ searchInput.addEventListener("keyup", (e) => {
     .replace(/\s+/g, " ")
     .toLowerCase();
   if (
-    (searchTerm !== "" && searchTerm.length >= 3) ||
-    (e.key === "Enter" && searchTerm !== "" && searchTerm.length >= 3)
+    (searchTerm !== "" && searchTerm.length >= 3 ) ||
+    (e.key === "Enter" && searchTerm !== "" && searchTerm.length >= 3) || 
+    (searchTerm == "")
   ) {
     searchRecipe();
   }
